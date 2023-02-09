@@ -20,3 +20,4 @@ Route::get('/', function () {
 Route::get('/{pathMatch}', function () {
     return view('app');
 })->where('pathMatch', '.*');
+

@@ -10,7 +10,14 @@ const router = createRouter({
         requiresAuth: true
       },
       component: () => import('../views/Dashboard.vue')
-
+    },
+    {
+      path: '/dubbing-requests/index',
+      name: 'DubbingRequestsIndex',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/product/index.vue')
     },
     {
       path: '/login',

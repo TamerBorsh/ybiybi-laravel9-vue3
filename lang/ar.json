@@ -1,4 +1,9 @@
 {
-    "Home" : "الرئيسية",
-    "Logout" : "تسجيل الخروج"
+    "Home" :                    "الرئيسية",
+    "Logout" :                  "تسجيل الخروج",
+    "Dubbing requests":         "طلبات الدبلجة",
+    "Apply now":                "قدم الآن",
+    "Control":                  "التحكم",
+    "My requests":              "طلباتي"
+
 }

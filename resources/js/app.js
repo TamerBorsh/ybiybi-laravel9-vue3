@@ -6,6 +6,12 @@ import router from './router';
 //Language
 import { i18nVue } from 'laravel-vue-i18n'
 
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]');
+
+axios.defaults.baseURL = 'http://app_f.tam/api/v1/';
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+
 // createApp(App).mount("#app");
 const app = createApp(App)
 

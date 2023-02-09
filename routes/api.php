@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Product\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,17 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function () {
 
     Route::controller(LoginController::class)->prefix('auth')->group(function () {
-        Route::get('login',         'index')->name('auth.login');
-        Route::post('login',        'authenticate')->name('auth.authenticate');
-        Route::get('logout',        'logout')->name('auth.logout');
+        Route::post('login',        'authenticate');
     });
-    
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('products',        'index');
+        Route::post('products/upload',        'UploadByDubbed');
+
     });
+
+    // Route::resources([
+    //     'products'              => ProductController::class,
+    //  ]);
+
+     
+});

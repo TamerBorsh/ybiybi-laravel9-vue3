@@ -47,13 +47,25 @@ const logout = () => {
         >
           <li class="nav-item">
             <RouterLink :to="{ name: 'Dashboard' }" class="nav-link"
-              ><i class="nav-icon fas fa-tachometer-alt"></i>{{ $t('Home') }}</RouterLink
+              ><i class="nav-icon fas fa-tachometer-alt"></i>{{ $t("Home") }}</RouterLink
             >
           </li>
 
           <li class="nav-item">
+            <RouterLink :to="{ name: 'DubbingRequestsIndex' }" class="nav-link"
+              ><i class="nav-icon fas fa-clapperboard"></i
+              >{{ $t("Dubbing requests") }}</RouterLink
+            >
+          </li>
+          <li class="nav-item">
+            <RouterLink :to="{ name: 'DubbingRequestsIndex' }" class="nav-link"
+              ><i class="nav-icon fas fa-download"></i
+              >{{ $t("My requests") }}</RouterLink
+            >
+          </li>
+          <li class="nav-item">
             <a href="javascript:void(0);" @click="logout" class="nav-link">
-              <i class="nav-icon  fa-solid fa-right-from-bracket"></i>{{ $t('Logout') }}
+              <i class="nav-icon fa-solid fa-right-from-bracket"></i>{{ $t("Logout") }}
             </a>
           </li>
         </ul>

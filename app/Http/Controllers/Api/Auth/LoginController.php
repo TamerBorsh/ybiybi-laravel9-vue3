@@ -28,23 +28,15 @@ class LoginController extends Controller
             }
             // return $user;
             if (Hash::check($request->post('password'), $user->password)) {
-                $token = $user->createToken('Login-Api');
-                $user->fcm_token = $request->fcm_token;
-                $user->save();
-                $user->setAttribute('token', $token->accessToken);
-
-                // return response()->json(
-                //     ['code' => Response::HTTP_OK, 'success' => 'true', 'message' => 'تم تسجيل الدخول بنجاح', 'object' => $user],
-                //     Response::HTTP_OK
-                // );
                 
-            
+                $token = $user->createToken('Login-Api')->accessToken;
 
                 return response()->json([
                     'code' => Response::HTTP_OK,
                     'success' => true,
                     'data' => $token,
-                    'message' => 'User login successfully'
+                    'message' => 'User login successfully',
+                    'object' => $user
                 ], Response::HTTP_OK);
 
 

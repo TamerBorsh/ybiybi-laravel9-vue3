@@ -13,12 +13,16 @@ let form = reactive({
 const login = async (e) => {
   e.preventDefault();
   await axios
-    .post("http://app_f.tam/api/v1/auth/login", form)
+    .post("auth/login", form)
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success) {
-        localStorage.setItem("token", response.data.data.token.id)
-        router.push("/dashboard")
+        localStorage.setItem("token", response.data.data);
+        // axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.data;
+        // axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+        //   "token"
+        // )}`;
+        router.push("/dashboard");
       } else {
         error.value = response.data.message;
       }
