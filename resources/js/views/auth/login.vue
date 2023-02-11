@@ -18,18 +18,26 @@ const login = async (e) => {
       // console.log(response.data);
       if (response.data.success) {
         localStorage.setItem("token", response.data.data);
-        // axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.data;
-        // axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
-        //   "token"
-        // )}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
         router.push("/dashboard");
       } else {
         error.value = response.data.message;
       }
     })
-    .catch((err) => {
-      // Handle errors
-      console.error(err);
+    .catch((error) => {
+      // console.error(err);
+      if (error.response.status == 422) {
+        var object = error.response.data.errors;
+        for (const key in object) {
+          var message = object[key][0];
+          break;
+        }
+        seeting_toastr()
+        toastr.error(message);
+      } else {
+        seeting_toastr();
+        toastr.error(error.response.data.message);
+      }
     });
 };
 </script>
@@ -82,7 +90,7 @@ const login = async (e) => {
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" class="btn btn-block">Sign In</button>
             </div>
             <!-- /.col -->
           </div>

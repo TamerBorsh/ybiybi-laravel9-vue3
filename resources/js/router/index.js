@@ -12,12 +12,20 @@ const router = createRouter({
       component: () => import('../views/Dashboard.vue')
     },
     {
-      path: '/dubbing-requests/index',
+      path: '/dubbing-requests',
       name: 'DubbingRequestsIndex',
       meta: {
         requiresAuth: true
       },
       component: () => import('../views/product/index.vue')
+    },
+    {
+      path: '/dubbing-requests/my-requests',
+      name: 'MyRequests',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/product/myrequest.vue')
     },
     {
       path: '/login',
@@ -26,7 +34,16 @@ const router = createRouter({
         requiresAuth: false
       },
       component: () => import('../views/auth/login.vue')
-    }
+    },
+
+    {
+      path: '/:pathMatch(.*)',
+      name: 'Notfound',
+      meta: {
+        requiresAuth: false
+      },
+      component: () => import('../views/auth/login.vue')
+    },
   ]
 })
 

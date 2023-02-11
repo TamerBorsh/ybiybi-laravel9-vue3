@@ -5,7 +5,7 @@ import Base from "./layouts/base.vue";
 <template>
   <Base />
 
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="min-height: 100vh;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">

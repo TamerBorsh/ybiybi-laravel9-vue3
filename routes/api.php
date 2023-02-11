@@ -26,14 +26,14 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('login',        'authenticate');
     });
     Route::controller(ProductController::class)->group(function () {
-        Route::get('products',        'index');
-        Route::post('products/upload',        'UploadByDubbed');
+        Route::get('user',        'getUser');
 
+        Route::get('products',                          'index');
+        Route::post('products/confirm-add-request/{id}',                          'confirmAddRequest');
+
+        Route::get('products/myrequests',         'getMyRequests');
+        Route::get('products/{id}/edit',                  'edit');
+
+        Route::post('products/upload',                  'UploadByTranslate');
     });
-
-    // Route::resources([
-    //     'products'              => ProductController::class,
-    //  ]);
-
-     
 });

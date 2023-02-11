@@ -4,6 +4,12 @@
     "Dubbing requests":         "طلبات الدبلجة",
     "Apply now":                "قدم الآن",
     "Control":                  "التحكم",
-    "My requests":              "طلباتي"
+    "My requests":              "طلباتي",
+    "Product Name": "اسم المنتج",
+    "Status":"الحالة",
+    "Upload":"رفع",
+    "The request has been added successfully":"تمت إضافة الطلب بنجاح",
+    "The request has already been added":"تمت إضافة الطلب بالفعل",
+    "Saved successfully":"تم الحفظ بنجاح"
 
 }

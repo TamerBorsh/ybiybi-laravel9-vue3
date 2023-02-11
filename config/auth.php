@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Translator;
+
 return [
 
     /*
@@ -38,11 +40,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'translators',
         ],
         'api' => [
             'driver' => 'passport',
-            'provider' => 'users',
+            'provider' => 'translators',
         ],
     ],
 
@@ -64,9 +66,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'translators' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => Translator::class,
         ],
 
         // 'users' => [
@@ -91,8 +93,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'translators' => [
+            'provider' => 'translators',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

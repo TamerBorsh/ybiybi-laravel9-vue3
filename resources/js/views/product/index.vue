@@ -1,20 +1,78 @@
-<script setup>
+<script>
 import Base from "../layouts/base.vue";
-import { onMounted, ref } from "vue";
 import axios from "axios";
-import FilePond from "../layouts/filepond.vue";
 
-let products = ref([]);
+export default {
+  components: {
+    Base,
+  },
 
-onMounted(async () => {
-  getProducts();
-});
+  name: "Index",
+  data() {
+    return {
+      products: [],
+    };
+  },
 
-const getProducts = async () => {
-  let response = await axios.get("products");
-  //   console.log(response);
-  products.value = response.data.products;
+  created() {
+    this.getProducts();
+  },
+
+  methods: {
+    // getProducts
+    getProducts() {
+      axios
+        .get("products")
+        .then((res) => {
+          this.products = res.data.products;
+        })
+        .catch((err) => {
+          // console.log(err);
+        });
+    },
+
+    // ConfirmAddRequest
+    ConfirmAddRequest(id) {
+      Swal.fire({
+        title: "Do you want to apply?",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Apply now",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post("products/confirm-add-request/" + id)
+            .then((response) => {
+              // console.log(response);
+              this.getProducts();
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+            })
+            .catch(function (error) {
+              // console.log(error);
+              if (error.response.status == 422) {
+                var object = error.response.data.errors;
+                for (const key in object) {
+                  var message = object[key][0];
+                  break;ء
+                }
+                toastr.error(message);
+              } else {
+                toastr.error(error.response.data.message);
+              }
+            });
+        }
+      });
+    },
+
+  },
 };
+
+
 </script>
 
 <template>
@@ -74,20 +132,18 @@ const getProducts = async () => {
                   <tbody>
                     <template v-for="product in products" :key="product.id">
                       <tr>
-                        <td>183</td>
+                        <td>{{ product.id }}</td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.vendor.full_name }}</td>
 
                         <td>{{ product.created_at }}</td>
                         <td>
-                          <!-- <span class="tag tag-success">Apply now</span> -->
                           <button
                             type="button"
-                            class="btn btn-default"
-                            data-toggle="modal"
-                            data-target="#modal-default"
+                            class="btn btn-block"
+                            @click="ConfirmAddRequest(product.id)"
                           >
-                            Launch Default Modal
+                            {{ $t("Apply now") }}
                           </button>
                         </td>
                       </tr>
@@ -100,19 +156,7 @@ const getProducts = async () => {
         </div>
       </div>
     </div>
-    <!-- ========================================= -->
-    <div class="modal fade" id="modal-default">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-              <FilePond/>
-        </div>
-      </div>
-    </div>
+
     <!-- ========================================= -->
   </div>
 </template>

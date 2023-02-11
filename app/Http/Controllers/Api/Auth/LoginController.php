@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Translator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
+
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -19,7 +22,7 @@ class LoginController extends Controller
             'password'          => 'required|string|min:8',
         ]);
         if (!$validator->fails()) {
-            $user = User::whereEmail($request->post('email'))->first();
+            $user = Translator::whereEmail($request->post('email'))->first();
             if (!$user) {
                 return response()->json(
                     ['code' => Response::HTTP_NOT_FOUND, 'status' => 'true', 'message' => 'المستخدم غير موجود'],
@@ -28,7 +31,7 @@ class LoginController extends Controller
             }
             // return $user;
             if (Hash::check($request->post('password'), $user->password)) {
-                
+
                 $token = $user->createToken('Login-Api')->accessToken;
 
                 return response()->json([
@@ -38,9 +41,6 @@ class LoginController extends Controller
                     'message' => 'User login successfully',
                     'object' => $user
                 ], Response::HTTP_OK);
-
-
-
             } else {
                 return response()->json(['success' => 'false', 'message' => 'فشل تسجيل الدخول, حاول مرة أخرى'], Response::HTTP_BAD_REQUEST);
             }
