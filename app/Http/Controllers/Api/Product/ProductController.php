@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attachment;
+use App\Models\Country;
 use App\Models\DubbingProduct;
 use App\Models\Product;
 use App\Trait\ImageTrait;
@@ -27,7 +28,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $data = Product::select('id', 'name', 'vendor_id', 'reseller_id', 'attachment_id', 'created_at')->with(['vendor:id,full_name', 'reseller:id,full_name', 'attachment:id,url'])->whereDubbing('1')->where('isAvailableDubbing', '1')->orderByDesc('id')->get();
+        $data = Product::select('id', 'name', 'vendor_id', 'reseller_id', 'attachment_id', 'created_at')->with(['vendor:id,full_name', 'reseller:id,full_name', 'attachment:id,url'])->whereDubbing('1')->where('isAvailableDubbing', '1')->orderByDesc('id')->paginate('10');
         return response()->json(['products' => $data], Response::HTTP_OK);
     }
 
@@ -84,4 +85,11 @@ class ProductController extends Controller
 
         }
     }
+
+    public function getCountry()
+    {
+        $country = Country::select('id', 'name_ar')->whereStatus('1')->get();
+        return response()->json(['countries' => $country]);
+    }
+
 }

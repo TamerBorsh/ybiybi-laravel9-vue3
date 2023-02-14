@@ -10,6 +10,9 @@
     "Upload":"رفع",
     "The request has been added successfully":"تمت إضافة الطلب بنجاح",
     "The request has already been added":"تمت إضافة الطلب بالفعل",
-    "Saved successfully":"تم الحفظ بنجاح"
+    "Saved successfully":"تم الحفظ بنجاح",
+    "The user does not exist":"المستخدم غير موجود",
+    "Attachment": "المرفق",
+    "New dubbed register":"سجل مدبلج جديد"
 
 }

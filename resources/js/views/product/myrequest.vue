@@ -49,13 +49,21 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         autoProcessQueue: true,
-        maxFilesize: 50, // in MB
+        maxFilesize: 50, // #max file size for upload, 5MB
         maxFiles: 1,
         acceptedFiles: ".mp4",
         addRemoveLinks: true,
+        // init: function () {
+        //   this.on("addedfile", function (file) {
+        //     if (currentFile) {
+        //       this.removeFile(currentFile);
+        //     }
+        //     currentFile = file;
+        //   });
+        // },
         success: function (file, response) {
-          // $('.modal').modal('hide');
-
+          this.removeFile(this.files[0]);
+          $("#uploadVideoModel").modal("hide");
           Toast.fire({
             icon: "success",
             title: response.message,

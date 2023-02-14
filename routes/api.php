@@ -24,6 +24,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::controller(LoginController::class)->prefix('auth')->group(function () {
         Route::post('login',        'authenticate');
+        Route::post('register',     'register');
+
     });
     Route::controller(ProductController::class)->group(function () {
         Route::get('user',        'getUser');
@@ -35,5 +37,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('products/{id}/edit',                  'edit');
 
         Route::post('products/upload',                  'UploadByTranslate');
+
+        Route::get('getcountries',                  'getCountry');
+
     });
 });

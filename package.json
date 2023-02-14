@@ -15,8 +15,10 @@
         "vue-template-compiler": "^2.7.14"
     },
     "dependencies": {
+        "admin-lte": "3.2",
         "jquery": "^3.6.3",
         "laravel-vue-i18n": "^2.3.4",
+        "laravel-vue-pagination": "^4.0.0",
         "vue": "^3.2.36",
         "vue-router": "^4.1.6"
     }

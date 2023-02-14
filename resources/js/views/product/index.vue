@@ -1,16 +1,18 @@
 <script>
 import Base from "../layouts/base.vue";
 import axios from "axios";
+import { Bootstrap4Pagination } from "laravel-vue-pagination";
 
 export default {
   components: {
     Base,
+    Bootstrap4Pagination,
   },
 
   name: "Index",
   data() {
     return {
-      products: [],
+      products: {},
     };
   },
 
@@ -20,10 +22,11 @@ export default {
 
   methods: {
     // getProducts
-    getProducts() {
+    getProducts(page = 1) {
       axios
-        .get("products")
+        .get(`products?page=${page}`)
         .then((res) => {
+          // console.log(res);
           this.products = res.data.products;
         })
         .catch((err) => {
@@ -58,7 +61,8 @@ export default {
                 var object = error.response.data.errors;
                 for (const key in object) {
                   var message = object[key][0];
-                  break;ء
+                  break;
+                  ء;
                 }
                 toastr.error(message);
               } else {
@@ -68,11 +72,8 @@ export default {
         }
       });
     },
-
   },
 };
-
-
 </script>
 
 <template>
@@ -124,32 +125,67 @@ export default {
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Vendor</th>
                       <th>Status</th>
+                      <th>{{ $t("Attachment") }}</th>
                       <th>{{ $t("Control") }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <template v-for="product in products" :key="product.id">
-                      <tr>
-                        <td>{{ product.id }}</td>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.vendor.full_name }}</td>
-
-                        <td>{{ product.created_at }}</td>
-                        <td>
-                          <button
-                            type="button"
-                            class="btn btn-block"
-                            @click="ConfirmAddRequest(product.id)"
-                          >
-                            {{ $t("Apply now") }}
-                          </button>
-                        </td>
-                      </tr>
-                    </template>
+                    <tr v-for="product in products.data" :key="product.id">
+                      <td>{{ product.id }}</td>
+                      <td>{{ product.name }}</td>
+                      <td>{{ product.vendor.full_name }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-default"
+                          data-toggle="modal"
+                          data-target="#modal-default"
+                        ><i class="fas fa-video"></i>
+                        </button>
+                        <div class="modal fade" id="modal-default">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ product.name }}</h4>
+                                <button
+                                  type="button"
+                                  class="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <video controls style="width: 100%">
+                                  <source :src="product.attachment.url"/>
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{{ product.created_at }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-block"
+                          @click="ConfirmAddRequest(product.id)"
+                        >
+                          {{ $t("Apply now") }}
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
+                <div class="m-3">
+                  <Bootstrap4Pagination
+                    :data="products"
+                    @pagination-change-page="getProducts"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -160,3 +196,19 @@ export default {
     <!-- ========================================= -->
   </div>
 </template>
+<style>
+.page-item.active .page-link {
+  background-color: #ff0050 !important;
+  border-color: #ff0050 !important;
+}
+.page-link {
+  color: #ff0050;
+}
+.page-link:hover {
+  color: #ff0050;
+}
+button.btn.btn-default {
+    border: none;
+    background: transparent;
+}
+</style>

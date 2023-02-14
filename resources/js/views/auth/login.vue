@@ -2,7 +2,8 @@
 import { reactive } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 const router = useRouter();
 
 let form = reactive({
@@ -18,24 +19,24 @@ const login = async (e) => {
       // console.log(response.data);
       if (response.data.success) {
         localStorage.setItem("token", response.data.data);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${localStorage.getItem("token")}`;
         router.push("/dashboard");
       } else {
         error.value = response.data.message;
       }
     })
-    .catch((error) => {
-      // console.error(err);
+    .catch(function (error) {
+      // console.log(error);
       if (error.response.status == 422) {
         var object = error.response.data.errors;
         for (const key in object) {
           var message = object[key][0];
           break;
         }
-        seeting_toastr()
         toastr.error(message);
       } else {
-        seeting_toastr();
         toastr.error(error.response.data.message);
       }
     });
@@ -46,7 +47,7 @@ const login = async (e) => {
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
-        <a href="#" class="h1"><b>Admin</b>LTE</a>
+        <a href="#" class="h1"><b>ybiybi</b></a>
       </div>
       <div class="card-body">
         <p class="login-box-msg">Sign in to start your session</p>
@@ -107,10 +108,12 @@ const login = async (e) => {
         <!-- /.social-auth-links -->
 
         <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
+          <a href="#">I forgot my password</a>
         </p>
         <p class="mb-0">
-          <a href="register.html" class="text-center">Register a new membership</a>
+          <RouterLink :to="{ name: 'Register' }" class="text-center"
+            >Register a new membership</RouterLink
+          >
         </p>
       </div>
       <!-- /.card-body -->
