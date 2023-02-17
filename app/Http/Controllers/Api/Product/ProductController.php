@@ -58,7 +58,7 @@ class ProductController extends Controller
     //get requests for translation
     public function getMyRequests(Request $request)
     {
-        $data = DubbingProduct::with(['product:id,name', 'translator:id,name,email'])->orderByDesc('id')->get();
+        $data = DubbingProduct::with(['product:id,name', 'translator:id,name,email'])->where('translator_id', Auth::id())->orderByDesc('id')->get();
         return response()->json(['products' => $data], Response::HTTP_OK);
     }
 
@@ -79,17 +79,13 @@ class ProductController extends Controller
             ]);
 
             $product = Product::findOrFail($request->id);
-            $product->attachment_id = $attachment->id;
+            $product->translated_id = $attachment->id;
             $product->update();
             return response()->json(['message' => __('Saved successfully')]);
 
         }
     }
 
-    public function getCountry()
-    {
-        $country = Country::select('id', 'name_ar')->whereStatus('1')->get();
-        return response()->json(['countries' => $country]);
-    }
+
 
 }

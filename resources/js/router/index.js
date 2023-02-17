@@ -7,7 +7,8 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title:"dashboard"
       },
       component: () => import('../views/Dashboard.vue')
     },
@@ -15,7 +16,8 @@ const router = createRouter({
       path: '/dubbing-requests',
       name: 'DubbingRequestsIndex',
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title:"dubbing-requests"
       },
       component: () => import('../views/product/index.vue')
     },
@@ -23,7 +25,8 @@ const router = createRouter({
       path: '/dubbing-requests/my-requests',
       name: 'MyRequests',
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title:"my-requests"
       },
       component: () => import('../views/product/myrequest.vue')
     },
@@ -31,7 +34,8 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       meta: {
-        requiresAuth: false
+        requiresAuth: false,
+        title:"Login"
       },
       component: () => import('../views/auth/login.vue')
     },
@@ -39,9 +43,19 @@ const router = createRouter({
       path: '/register',
       name: 'Register',
       meta: {
-        requiresAuth: false
+        requiresAuth: false,
+        title:"Register"
       },
       component: () => import('../views/auth/register.vue')
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      meta: {
+        requiresAuth: true,
+        title:"Profile"
+      },
+      component: () => import('../views/auth/profile.vue')
     },
     
 
@@ -64,7 +78,7 @@ router.beforeEach((to, from) => {
   if (to.meta.requiresAuth == false && localStorage.getItem('token')) {
     return { name: 'Dashboard' }
   }
-
+  document.title = `${to.meta.title}`;
 })
 
 export default router

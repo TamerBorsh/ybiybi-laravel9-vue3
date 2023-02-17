@@ -13,8 +13,7 @@ let form = reactive({
 
 const login = async (e) => {
   e.preventDefault();
-  await axios
-    .post("auth/login", form)
+  await axios .post("auth/login", form)
     .then((response) => {
       // console.log(response.data);
       if (response.data.success) {
@@ -23,8 +22,6 @@ const login = async (e) => {
           "Authorization"
         ] = `Bearer ${localStorage.getItem("token")}`;
         router.push("/dashboard");
-      } else {
-        error.value = response.data.message;
       }
     })
     .catch(function (error) {
@@ -83,12 +80,6 @@ const login = async (e) => {
             </div>
           </div>
           <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember" />
-                <label for="remember"> Remember Me </label>
-              </div>
-            </div>
             <!-- /.col -->
             <div class="col-4">
               <button type="submit" class="btn btn-block">Sign In</button>
@@ -97,17 +88,9 @@ const login = async (e) => {
           </div>
         </form>
 
-        <div class="social-auth-links text-center mt-2 mb-3">
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
-            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-          </a>
-        </div>
         <!-- /.social-auth-links -->
 
-        <p class="mb-1">
+        <p class="my-2">
           <a href="#">I forgot my password</a>
         </p>
         <p class="mb-0">

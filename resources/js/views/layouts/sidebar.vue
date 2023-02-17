@@ -9,12 +9,14 @@ const logout = () => {
 </script>
 
 <template>
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="min-height: 100vh">
+  <aside
+    class="main-sidebar sidebar-dark-primary elevation-4"
+    style="position: fixed"
+  >
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img
-        src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png"
-        alt="AdminLTE Logo"
+        src="https://adminlte.io/themes/v3/dist/img/AdminLTELogo.png"
         class="brand-image img-circle elevation-3"
         style="opacity: 0.8"
       />
@@ -46,25 +48,46 @@ const logout = () => {
           data-accordion="false"
         >
           <li class="nav-item">
-            <RouterLink :to="{ name: 'Dashboard' }" active-class="active" class="nav-link"
-              ><i class="nav-icon fas fa-tachometer-alt"></i>{{ $t("Home") }}</RouterLink
-            >
-          </li>
-
-          <li class="nav-item">
-            <RouterLink :to="{ name: 'DubbingRequestsIndex' }" active-class="active" class="nav-link"
-              ><i class="nav-icon fas fa-video"></i>{{ $t("Dubbing requests") }}</RouterLink
+            <RouterLink
+              :to="{ name: 'Dashboard' }"
+              active-class="active"
+              class="nav-link"
+              ><i class="nav-icon fas fa-tachometer-alt"></i
+              >{{ $t("Home") }}</RouterLink
             >
           </li>
           <li class="nav-item">
-            <RouterLink :to="{ name: 'MyRequests' }" active-class="active" class="nav-link"
+            <RouterLink
+              :to="{ name: 'Profile' }"
+              active-class="active"
+              class="nav-link"
+              ><i class="nav-icon fas fa-download"></i
+              >{{ $t("My Profile") }}</RouterLink
+            >
+          </li>
+          <li class="nav-item">
+            <RouterLink
+              :to="{ name: 'DubbingRequestsIndex' }"
+              active-class="active"
+              class="nav-link"
+              ><i class="nav-icon fas fa-video"></i
+              >{{ $t("Dubbing requests") }}</RouterLink
+            >
+          </li>
+          <li class="nav-item">
+            <RouterLink
+              :to="{ name: 'MyRequests' }"
+              active-class="active"
+              class="nav-link"
               ><i class="nav-icon fas fa-download"></i
               >{{ $t("My requests") }}</RouterLink
             >
           </li>
+
           <li class="nav-item">
             <a href="javascript:void(0);" @click="logout" class="nav-link">
-              <i class="nav-icon fa-solid fa-right-from-bracket"></i>{{ $t("Logout") }}
+              <i class="nav-icon fa-solid fa-right-from-bracket"></i
+              >{{ $t("Logout") }}
             </a>
           </li>
         </ul>

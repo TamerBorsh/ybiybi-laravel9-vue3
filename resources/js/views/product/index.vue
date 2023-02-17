@@ -120,19 +120,19 @@ export default {
               </div>
 
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-striped projects">
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
-                      <th>Status</th>
+                      <th>{{ $t("Title") }}</th>
+                      <th>{{ $t("Name") }}</th>
                       <th>{{ $t("Attachment") }}</th>
                       <th>{{ $t("Control") }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="product in products.data" :key="product.id">
-                      <td>{{ product.id }}</td>
+                    <tr v-for="(product, index) in products.data" :key="index">
+                      <td>{{ index + 1 }}</td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.vendor.full_name }}</td>
                       <td>
@@ -141,13 +141,16 @@ export default {
                           class="btn btn-default"
                           data-toggle="modal"
                           data-target="#modal-default"
-                        ><i class="fas fa-video"></i>
+                        >
+                          <i class="fas fa-video"></i>
                         </button>
                         <div class="modal fade" id="modal-default">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h4 class="modal-title">{{ product.name }}</h4>
+                                <h4 class="modal-title">
+                                  {{ product.name.substring(0, 40) + ".." }}
+                                </h4>
                                 <button
                                   type="button"
                                   class="close"
@@ -159,7 +162,7 @@ export default {
                               </div>
                               <div class="modal-body">
                                 <video controls style="width: 100%">
-                                  <source :src="product.attachment.url"/>
+                                  <source :src="product.attachment.url" />
                                   Your browser does not support the video tag.
                                 </video>
                               </div>
@@ -174,7 +177,7 @@ export default {
                           class="btn btn-block"
                           @click="ConfirmAddRequest(product.id)"
                         >
-                          {{ $t("Apply now") }}
+                          {{ $t("Apply") }}
                         </button>
                       </td>
                     </tr>
@@ -208,7 +211,7 @@ export default {
   color: #ff0050;
 }
 button.btn.btn-default {
-    border: none;
-    background: transparent;
+  border: none;
+  background: transparent;
 }
 </style>

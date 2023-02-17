@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\GeneralController;
 use App\Http\Controllers\Api\Product\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::controller(LoginController::class)->prefix('auth')->group(function () {
         Route::post('login',        'authenticate');
         Route::post('register',     'register');
-
     });
     Route::controller(ProductController::class)->group(function () {
         Route::get('user',        'getUser');
@@ -39,6 +39,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('products/upload',                  'UploadByTranslate');
 
         Route::get('getcountries',                  'getCountry');
+    });
 
+    Route::controller(GeneralController::class)->group(function () {
+        Route::get('getcountries',                  'getCountry');
     });
 });

@@ -53,33 +53,24 @@ class LoginController extends Controller
 
     public function register(Request $request)
     {
-        return response()->json($request->all());
         $validator = Validator::make($request->all(), [
-            'email'             => 'required|string|email|max:255',
+            'name'          => 'required|string|min:8',
+            'email'             => 'required|string|email|unique:translators,email',
             'password'          => 'required|string|min:8',
+            'country_id'          => 'required|integer|exists:countries,id',
         ]);
         if (!$validator->fails()) {
-            $user = Translator::whereEmail($request->post('email'))->first();
-            if (!$user) {
-                return response()->json(
-                    ['code' => Response::HTTP_NOT_FOUND, 'status' => 'true', 'message' => __('The user does not exist')],
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-            // return $user;
-            if (Hash::check($request->post('password'), $user->password)) {
-
+            $user = Translator::create($request->only(['name', 'email', 'password', 'country_id']));
+            if ($user) {
                 $token = $user->createToken('Login-Api')->accessToken;
 
                 return response()->json([
                     'code' => Response::HTTP_OK,
                     'success' => true,
-                    'data' => $token,
-                    'message' => 'User login successfully',
+                    'token' => $token,
+                    'message' => __('You have been registered successfully'),
                     'object' => $user
                 ], Response::HTTP_OK);
-            } else {
-                return response()->json(['success' => 'false', 'message' => 'فشل تسجيل الدخول, حاول مرة أخرى'], Response::HTTP_BAD_REQUEST);
             }
         } else {
             return response()->json([
